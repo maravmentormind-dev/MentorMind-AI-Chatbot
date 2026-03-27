@@ -1,0 +1,96 @@
+<!-- SAVE THIS AS index.html AND DROP INTO NETLIFY TO GET YOUR URL -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MentorMind | R. MARAV Official</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: #0b111a; font-family: sans-serif; overflow: hidden; }
+        #gate { display: flex; position: fixed; inset: 0; background: #0b111a; z-index: 9999; align-items: center; justify-content: center; }
+        .sidebar { background: #fff; width: 280px; border-right: 1px solid #eee; }
+        #app { display: none; height: 100vh; width: 100vw; background: #f9f9f9; }
+        .badge { background: #eff6ff; color: #1e40af; padding: 5px 15px; border-radius: 20px; font-size: 11px; font-weight: 800; }
+        video { width: 100%; border-radius: 10px; margin-top: 10px; border: 2px solid #3b82f6; display: none; }
+    </style>
+</head>
+<body class="flex items-center justify-center">
+
+    <!-- LOGIN SCREEN -->
+    <div id="gate">
+        <div class="text-center p-10 bg-[#161d29] rounded-[3rem] border border-gray-800 shadow-2xl w-80">
+            <h1 class="text-4xl font-black italic text-blue-500 mb-8">MentorMind</h1>
+            <div class="space-y-3">
+                <button onclick="enter()" class="w-full py-3 bg-white text-black rounded-xl font-bold italic">LOGIN</button>
+                <button onclick="enter()" class="w-full py-3 bg-blue-600 text-white rounded-xl font-bold italic">SIGN UP</button>
+            </div>
+            <div class="flex justify-center gap-6 mt-8 text-gray-500 text-2xl">
+                <i onclick="enter()" class="fab fa-google cursor-pointer"></i>
+                <i onclick="enter()" class="fab fa-apple cursor-pointer"></i>
+                <i onclick="enter()" class="fab fa-windows cursor-pointer"></i>
+            </div>
+            <p class="text-[9px] text-gray-600 mt-10 font-bold uppercase tracking-widest leading-none">Founder R. MARAV</p>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="app" class="flex">
+        <aside class="sidebar flex flex-col p-6 shadow-xl">
+            <h2 class="text-xl font-black italic text-blue-600 mb-10">MentorMind</h2>
+            
+            <p class="text-[10px] text-gray-400 font-bold mb-3">FORMULA VAULT</p>
+            <button onclick="ins('E=mc²')" class="text-left text-xs p-3 hover:bg-gray-100 rounded-lg mb-2">● Relativity Formula</button>
+            <button onclick="ins('H2 + O = H2O')" class="text-left text-xs p-3 hover:bg-gray-100 rounded-lg mb-6">● Water Compound</button>
+
+            <p class="text-[10px] text-gray-400 font-bold mb-3">ACTIVITY HISTORY</p>
+            <div id="hist" class="flex-1 text-[10px] text-gray-400 italic">No history...</div>
+            
+            <video id="vid" autoplay playsinline></video>
+
+            <div class="mt-auto flex items-center gap-3 p-3 bg-blue-50 rounded-2xl border border-blue-100">
+                <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">MM</div>
+                <div class="text-[11px] font-bold text-blue-800 truncate">ADMIN: R. MARAV</div>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col items-center justify-center p-10 relative">
+            <h1 class="text-3xl font-bold text-gray-800 mb-10 italic">How can I help you today?</h1>
+            
+            <div class="w-full max-w-xl bg-white rounded-full p-2 flex items-center px-6 gap-4 border shadow-sm focus-within:ring-4 focus-within:ring-blue-100 transition">
+                <i onclick="cam()" class="fa-solid fa-camera text-gray-300 hover:text-blue-500 cursor-pointer"></i>
+                <input id="q" onkeydown="key(event)" placeholder="Ask R.MARAV AI..." class="flex-1 outline-none text-lg p-2" />
+                <button onclick="ask()" class="text-2xl text-blue-600"><i class="fa-solid fa-circle-arrow-up"></i></button>
+            </div>
+
+            <div class="flex gap-4 mt-8">
+                <div class="badge">789+ Students Verified</div>
+                <div class="badge">⭐ 5.0 High Rating</div>
+            </div>
+            
+            <footer class="absolute bottom-10 text-[10px] text-gray-400 uppercase tracking-widest font-bold">R. MARAV &copy; 2024 AI TECHNOLOGY</footer>
+        </main>
+    </div>
+
+    <script>
+        function enter() { document.getElementById('gate').style.display='none'; document.getElementById('app').style.display='flex'; }
+        function key(e) { if(e.key === 'Enter') ask(); }
+        function ins(v) { document.getElementById('q').value = v; }
+        function ask() { 
+            const i = document.getElementById('q'); 
+            const h = document.getElementById('hist');
+            if(i.value) { 
+                h.innerHTML = `<p class='p-2 mb-1 bg-white border border-gray-100 rounded text-blue-600'>● ${i.value}</p>` + h.innerHTML;
+                alert("R.MARAV AI Processed: " + i.value); 
+                i.value=''; 
+            }
+        }
+        async function cam() {
+            const v = document.getElementById('vid');
+            if(v.style.display==='block') { v.style.display='none'; v.srcObject.getTracks().forEach(t=>t.stop()); }
+            else { v.srcObject = await navigator.mediaDevices.getUserMedia({video:true}); v.style.display='block'; }
+        }
+    </script>
+</body>
+</html>
